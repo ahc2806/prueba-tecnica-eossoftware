@@ -1,18 +1,25 @@
 import React from 'react';
 import * as eva from '@eva-design/eva';
+import { DashboardNav } from './src/routes';
+import { EvaIconsPack } from '@ui-kitten/eva-icons';
 import { NavigationContainer } from '@react-navigation/native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
-import { ApplicationProvider, Layout, Text } from '@ui-kitten/components';
+import { ApplicationProvider, IconRegistry } from '@ui-kitten/components';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+
+const { Navigator, Screen } = createNativeStackNavigator();
 
 export default App = () => {
   return (
     <SafeAreaProvider>
-      <ApplicationProvider {...eva} theme={eva.dark}>
+      <IconRegistry icons={EvaIconsPack} />
+      <ApplicationProvider {...eva} theme={eva.light}>
         <NavigationContainer>
-          <Layout
-            style={{ justifyContent: 'center', alignItems: 'center', flex: 1 }}>
-            <Text>ESO Software</Text>
-          </Layout>
+          <Navigator
+            initialRouteName="Dashboard"
+            screenOptions={{ headerShown: false }}>
+            <Screen name="Dashboard" component={DashboardNav} />
+          </Navigator>
         </NavigationContainer>
       </ApplicationProvider>
     </SafeAreaProvider>
