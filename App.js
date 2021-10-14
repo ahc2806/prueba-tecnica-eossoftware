@@ -13,7 +13,7 @@ export default App = () => {
   return (
     <SafeAreaProvider>
       <IconRegistry icons={EvaIconsPack} />
-      <ApplicationProvider {...eva} theme={eva.light}>
+      <ApplicationProvider {...eva} theme={eva.dark}>
         <NavigationContainer>
           <Navigator
             initialRouteName="Dashboard"

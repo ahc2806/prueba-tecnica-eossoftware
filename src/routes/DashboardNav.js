@@ -1,13 +1,15 @@
 import React from 'react';
+import { TabNavigatorScreen } from '../screens';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { HomeScreen } from '../screens';
 
 const { Navigator, Screen } = createNativeStackNavigator();
 
 const DashboardNav = () => {
   return (
-    <Navigator initialRouteName="Home" screenOptions={{ headerShown: false }}>
-      <Screen name="Home" component={HomeScreen} />
+    <Navigator
+      initialRouteName="TabNavigator"
+      screenOptions={{ headerShown: false }}>
+      <Screen name="TabNavigator" component={TabNavigatorScreen} />
     </Navigator>
   );
 };

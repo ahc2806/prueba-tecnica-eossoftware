@@ -1,19 +1,44 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { StyleSheet, View } from 'react-native';
-import { Layout, Text } from '@ui-kitten/components';
-import { Container } from '../components';
+import { Text, useTheme } from '@ui-kitten/components';
+import { Container, CarouselVertical } from '../components';
 import { Colors } from '../utils/colors';
+import { getNewsMovies } from '../services/movies';
 
-const HomeScreen = () => {
+const HomeScreen = ({ navigation }) => {
+  const theme = useTheme();
+
+  const [newMovies, setNewMovies] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await getNewsMovies();
+      setNewMovies(response.results);
+    };
+
+    fetchData();
+  }, []);
+
   return (
     <Container
       activeBar
-      themeBar="dark"
-      colorBar={Colors.white}
+      themeBar="light"
+      colorBar={theme['color-primary-900']}
       withHeader
+      withScroll
+      propsHeader={{
+        title: 'Cartelera',
+        navigation,
+        activeArrow: !true,
+        style: { paddingHorizontal: 40 },
+      }}
       backgroundColor={Colors.white}>
-      <View style={{ justifyContent: 'center', alignItems: 'center', flex: 1 }}>
-        <Text>ESO Software</Text>
+      <View style={{ marginTop: 50 }}>
+        <Text style={{ color: theme['color-basic-800'] }} category="h5">
+          Películas recientes
+        </Text>
+
+        <CarouselVertical data={newMovies} />
       </View>
     </Container>
   );

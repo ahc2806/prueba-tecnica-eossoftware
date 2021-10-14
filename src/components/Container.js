@@ -13,6 +13,8 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { Colors } from '../utils/colors';
 import {
   Icon,
+  Text,
+  useTheme,
   TopNavigation,
   TopNavigationAction,
 } from '@ui-kitten/components';
@@ -26,7 +28,10 @@ const ContainerComponent = ({
   backgroundColor,
   styleContainer,
   withHeader,
+  propsHeader,
 }) => {
+  const theme = useTheme();
+
   return (
     <SafeAreaView
       style={{
@@ -45,13 +50,23 @@ const ContainerComponent = ({
 
       {withHeader ? (
         <TopNavigation
-          style={{ marginHorizontal: -20 }}
-          accessoryLeft={() => (
-            <TopNavigationAction
-              icon={props => <Icon {...props} name="arrow-back" />}
-            />
-          )}
-          title="Home"
+          {...propsHeader}
+          style={{
+            marginHorizontal: -20,
+            backgroundColor: theme['color-primary-700'],
+            ...propsHeader.style,
+          }}
+          accessoryLeft={
+            propsHeader.activeArrow
+              ? () => (
+                  <TopNavigationAction
+                    onPress={() => propsHeader?.navigation?.goBack}
+                    icon={props => <Icon {...props} name="arrow-back" />}
+                  />
+                )
+              : undefined
+          }
+          title={evaProps => <Text {...evaProps}>{propsHeader.title}</Text>}
         />
       ) : null}
 
@@ -83,7 +98,7 @@ const style = StyleSheet.create({
     flex: 1,
     backgroundColor: Colors.white,
     padding: 20,
-    paddingTop: 10,
+    paddingTop: 0,
   },
 });
 
